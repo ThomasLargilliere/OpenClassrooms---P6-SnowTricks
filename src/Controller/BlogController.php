@@ -126,8 +126,9 @@ class BlogController extends AbstractController
                 $imageTrick->setLink($newFilename);
                 $imageTrick->setTrick($attachedTrick);
                 $entityManager->persist($imageTrick);
-                $entityManager->flush();
             }
+
+            $entityManager->flush();
 
             $videosMedia = $form->get('video')->getData();
 
@@ -136,8 +137,9 @@ class BlogController extends AbstractController
                 $videoTrick->setLink($video);
                 $videoTrick->setTrick($attachedTrick);
                 $entityManager->persist($videoTrick);
-                $entityManager->flush();
             }
+
+            $entityManager->flush();
 
             $this->addFlash('success', 'Votre trick a bien été ajouté !');
             return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
@@ -325,10 +327,11 @@ class BlogController extends AbstractController
                 $fichier = $this->getParameter('images_trick_directory') . '/' . $image;
                 if(file_exists($fichier)){
                     $entityManager->remove($bdImage);
-                    $entityManager->flush();
                     unlink($fichier);
                 }
             }
+
+            $entityManager->flush();
 
             $delVideo = [];
             if (isset($_POST['delVideoTrick'])){ $delVideo = $_POST['delVideoTrick']; }
@@ -336,8 +339,9 @@ class BlogController extends AbstractController
             foreach($delVideo as $video){
                 $bdVideo = $repoVideo->findOneById($video);
                 $entityManager->remove($bdVideo);
-                $entityManager->flush();
             }
+
+            $entityManager->flush();
 
 
             $slug = $slugger->slug(strtolower($trick->getTitle()));
@@ -368,8 +372,9 @@ class BlogController extends AbstractController
                 $imageTrick->setLink($newFilename);
                 $imageTrick->setTrick($attachedTrick);
                 $entityManager->persist($imageTrick);
-                $entityManager->flush();
             }
+
+            $entityManager->flush();
 
             $videosMedia = $form->get('video')->getData();
             foreach ($videosMedia as $video){
@@ -377,8 +382,9 @@ class BlogController extends AbstractController
                 $videoTrick->setLink($video);
                 $videoTrick->setTrick($attachedTrick);
                 $entityManager->persist($videoTrick);
-                $entityManager->flush();
             }
+
+            $entityManager->flush();
 
             $this->addFlash('success', 'Votre trick a été modifié avec succèss !');
             return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
@@ -414,7 +420,6 @@ class BlogController extends AbstractController
             $fichier = $this->getParameter('images_trick_directory') . '/' . $image->getLink();
             if(file_exists($fichier)){
                 $entityManager->remove($bdImage);
-                $entityManager->flush();
                 unlink($fichier);
             }
         }
@@ -422,13 +427,11 @@ class BlogController extends AbstractController
         foreach($trick->getVideo() as $video){
             $bdVideo = $repoVideo->findOneById($video->getId());
             $entityManager->remove($bdVideo);
-            $entityManager->flush();
         }
 
         foreach($trick->getComments() as $comment){
             $bdComment = $repoComment->findOneById($comment->getId());
-            $entityManager->remove($bdComment);
-            $entityManager->flush();            
+            $entityManager->remove($bdComment);            
         }
 
         $entityManager->remove($trick);
