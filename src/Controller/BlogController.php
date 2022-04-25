@@ -227,23 +227,13 @@ class BlogController extends AbstractController
                 )
             ){
                 $entityManager = $doctrine->getManager();
-                if (isset($_POST['password1']) && ($_POST['password1'] != "")){
-                    if (isset($_POST['password2'])){
-                        if ($_POST['password1'] == $_POST['password2']){
-                            $user->setPassword(
-                                $userPasswordHasher->hashPassword(
-                                        $user,
-                                        $_POST['password1']
-                                    )
-                                );
-                        } else {
-                            $this->addFlash('failed', 'Les mots de passes ne correspondent pas');
-                            return $this->redirectToRoute('profil');
-                        }
-                    } else {
-                        $this->addFlash('failed', 'Veuillez remplir le champ de confirmation du nouveau mot de passe');
-                        return $this->redirectToRoute('profil'); 
-                    }
+
+                if ($form->get('plainPassword')->getData() != ''){
+                    $user->setPassword($userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('plainPassword')->getData()
+                        )
+                    );
                 }
 
                 $avatarFile = $form->get('avatar')->getData();
@@ -288,6 +278,7 @@ class BlogController extends AbstractController
         $user = $this->getUser();
         
         $trick = $repo->findOneBySlug($slug);
+        $saveFeaturedPicture = $trick->getfeaturedPicture();
 
         if (!$trick){
             $this->addFlash('failed', 'Aucun trick trouvé avec ce slug');
@@ -322,7 +313,7 @@ class BlogController extends AbstractController
                 $trick->setFeaturedPicture($newFilename);
 
             } else {
-                $trick->setFeaturedPicture($_POST['lastFeaturedPicture']);
+                $trick->setFeaturedPicture($saveFeaturedPicture);
             }
 
             $entityManager = $doctrine->getManager();

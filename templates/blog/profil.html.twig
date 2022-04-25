@@ -30,7 +30,8 @@
             {{ form_row(formProfil.pseudo) }}
             {{ form_row(formProfil.firstName) }}
             {{ form_row(formProfil.lastName) }}
-            <input type="submit" class="fadeIn second mt-4" value="Modifier mon profil">
+            {{ form_row(formProfil.plainPassword) }}
+            <input type="submit" class="fadeIn six mt-4" value="Modifier mon profil">
         {{ form_end(formProfil) }}
     </div>
 </div>

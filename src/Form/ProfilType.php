@@ -35,7 +35,7 @@ class ProfilType extends AbstractType
             'required' => true,
             'label' => false,
             'attr' => [ 
-                'placeholder' => 'MartinD14',
+                'placeholder' => 'Pseudo',
                 'class' => 'fadeIn second'
             ]
         ])
@@ -51,7 +51,7 @@ class ProfilType extends AbstractType
             'required' => true,
             'label' => false,
             'attr' => [ 
-                'placeholder' => 'Martin',
+                'placeholder' => 'Prénom',
                 'class' => 'fadeIn fourth'
             ]
         ])
@@ -59,9 +59,19 @@ class ProfilType extends AbstractType
             'required' => true,
             'label' => false,
             'attr' => [
-                'placeholder' => 'Dupont',
+                'placeholder' => 'Nom',
                 'class' => 'fadeIn five'
             ]
+        ])
+        ->add('plainPassword', \Symfony\Component\Form\Extension\Core\Type\RepeatedType::class, [
+            'type' => \Symfony\Component\Form\Extension\Core\Type\PasswordType::class,
+            'invalid_message' => 'Les mots de passes ne correspondent pas.',
+            'required' => false,
+            'label' => false,
+            'mapped' => false,
+            'options' => ['attr' => ['class' => 'fadeIn third']],
+            'first_options'  => ['label' => false, 'attr' => ['placeholder' => 'Nouveau mot de passe (laisser vide pour ne pas changer)']],
+            'second_options' => ['label' => false, 'attr' => ['placeholder' => 'Confirmation nouveau mot de passe']],
         ])
     ;
     }

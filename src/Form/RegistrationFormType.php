@@ -33,14 +33,15 @@ class RegistrationFormType extends AbstractType
                 'class' => 'fadeIn second'
             ]
         ])
-        ->add('plainPassword', PasswordType::class, [
+        ->add('plainPassword', \Symfony\Component\Form\Extension\Core\Type\RepeatedType::class, [
+            'type' => \Symfony\Component\Form\Extension\Core\Type\PasswordType::class,
+            'invalid_message' => 'Les mots de passes ne correspondent pas.',
+            'required' => true,
             'label' => false,
             'mapped' => false,
-            'attr' => [
-                'autocomplete' => 'new-password', 
-                'placeholder' => 'Mot de passe...',
-                'class' => 'fadeIn third'
-            ],
+            'options' => ['attr' => ['class' => 'fadeIn third']],
+            'first_options'  => ['label' => false, 'attr' => ['placeholder' => 'Mot de passe']],
+            'second_options' => ['label' => false, 'attr' => ['placeholder' => 'Confirmation mot de passe']],
             'constraints' => [
                 new NotBlank([
                     'message' => 'Veuillez entrer un mot de passe',

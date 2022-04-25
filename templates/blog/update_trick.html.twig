@@ -20,7 +20,6 @@
             <div class="form-group mb-3">
                 {{ form_row(formTrick.featuredPicture) }}
                 <img style="width:75%;height:auto;max-height:300px" src="{{ asset('uploads/featured_pictures/' ~ trick.featuredPicture | trans) }}" alt="Photo du trick">
-                <input type="hidden" name="lastFeaturedPicture" value="{{ trick.featuredPicture }}">
             </div>
             <div class="form-group">
                 {{ form_row(formTrick.image) }}
