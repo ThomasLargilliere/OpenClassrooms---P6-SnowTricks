@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section id="sectionTop" class="vh-100">
+        <img class="w-100 vh-100 d-none d-xl-block" src="images/trick_snowboard.jpg">
+        <img class="w-100 vh-100 d-xl-none" src="images/snowboard_trick_tel.webp">
+        <a id="btnGoSectionTrick" href="#sectionTrick"><i class="fa-solid fa-circle-arrow-down"></i></a>
+    </section>
+
+    {% if pagination.items|length == 0 %}
+        <div class="text-center">
+            Aucun trick n'a encore été crée, soyer le premier ! <a href="{{ path('create_trick') }}">Créer un trick</a>
+        </div>
+    {% else %}
+
+        <section id="sectionTrick" class="container mb-5 position-relative">
+            <div class="row d-flex justify-content-around item-trick-div">
+                {% for trick in pagination %}
+                    <div class="item-trick">
+                        <div class="card mt-5 col-xl-11">
+                            <div class="position-relative">
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') and trick.idUser.id == app.user.id %}
+                                <div style="width:15%;" class="position-absolute end-0 d-flex justify-content-around">
+                                    <a class="text-warning" href="{{ path('trick_update', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil"></i></a>
+                                    <a class="text-danger" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="confirm('Êtes-vous sur de vouloir supprimer ce trick ?');"><i class="fa-solid fa-trash-can"></i></a>
+                                </div>
+                                {% endif %}
+                                <a href="{{ path('trick_show', {'slug': trick.slug}) }}">
+                                    <img class="item-trick-image rounded" src="{{ asset('uploads/featured_pictures/' ~ trick.featuredPicture | trans) }}" alt="Photo du trick">
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title text-center">
+                                    <a href="{{ path('trick_show', {'slug': trick.slug}) }}">{{ trick.title|length > 25 ? trick.title|slice(0, 15) ~ '...' : trick.title  }}</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="navigation mt-3">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </section>
+        {% if pagination.items|length > 5 %}
+        <section class="position-relative">
+            <a id="btnGoSectionTop" href="#sectionTop"><i class="fa-solid fa-circle-arrow-up"></i></a>
+        </section>
+        {% endif %}
+
+    {% endif %}
+
+
+{% endblock %}
+

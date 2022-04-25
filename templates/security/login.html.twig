@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Connexion {% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/forms/login.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <div class="fadeIn first">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            <input type="email" id="inputEmail" class="fadeIn second" name="email" placeholder="Email" required autofocus>
+            <input type="password" id="inputPassword" class="fadeIn third" name="password" placeholder="Mot de passe" required>
+            <input type="submit" class="fadeIn fourth" value="Se connecter">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        </form>
+        <div id="formFooter">
+            <a class="underlineHover" href="{{path('app_forgot_password_request')}}">Mot de passe oublié ?</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

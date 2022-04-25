@@ -1,0 +1,112 @@
+.mt{
+    margin-top: 100px;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+#youtube-fields-list{
+    list-style-type: none;
+}
+
+.link-field{
+    list-style-type: none !important;
+    margin-left: -30px;
+}
+
+.btn-delete-image-trick{
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+.btn-delete-video-trick{
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+.user-avatar-profil{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;;
+    margin-top: 25px;
+}
+
+.absolute-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+#btnGoSectionTrick{
+    color: black;
+    font-size: 38px;
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+}
+
+#btnGoSectionTop{
+    color: black;
+    font-size: 38px;
+    position: absolute;
+    right: 2%;
+    bottom: 2%;
+}
+
+.avatar-comment{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.item-trick{
+    flex-basis:20%;
+}
+
+.item-trick-image{
+    width:100%;
+    height:200px;
+    transition: 0.5s;
+}
+
+.item-trick-image:hover{
+/* L'image est grossie de 15% */
+    -webkit-transform:scale(1.15);
+    -moz-transform:scale(1.15);
+    -ms-transform:scale(1.15);
+    -o-transform:scale(1.15);
+    transform:scale(1.15);
+}
+
+@media (min-width: 992px) and (max-width: 1500px){
+    .item-trick{
+        flex-basis:25%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+    .item-trick{
+        flex-basis:33%;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+    .item-trick{
+        flex-basis:50%;
+    }
+}
+
+@media (max-width: 575px){
+    .item-trick{
+        flex-basis:100%;
+    }
+    .item-trick-image{
+        width:100%;
+        height:auto;
+    }
+}

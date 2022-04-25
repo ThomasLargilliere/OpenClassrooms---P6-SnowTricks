@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formTrick 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Ajouter un trick</h1>
+
+        <div class="col-6 offset-3 mt-4">
+            {{ form_start(formTrick) }}
+            <div class="form-group mb-3">
+                {{ form_row(formTrick.title) }}
+            </div>
+            <div class="form-group mb-3">
+                {{ form_row(formTrick.description) }}
+            </div>
+            <div class="form-group mb-3">
+                {{ form_row(formTrick.id_category) }}
+            </div>
+            <div class="form-group mb-3">
+                {{ form_row(formTrick.featuredPicture) }}
+                <img style="width:75%;height:auto;max-height:300px" src="{{ asset('uploads/featured_pictures/' ~ trick.featuredPicture | trans) }}" alt="Photo du trick">
+                <input type="hidden" name="lastFeaturedPicture" value="{{ trick.featuredPicture }}">
+            </div>
+            <div class="form-group">
+                {{ form_row(formTrick.image) }}
+                <section id="sectionImage">
+                    <div class="row d-flex justify-content-around">
+                        {% for image in trick.image %}
+                            <div class="col-xl-4" class="mt-4">
+                                <div class="col-xl-11">
+                                    <div style="position:relative">
+                                        <img id="{{ image.link }}" class="img-fluid" src="{{ asset('uploads/images_trick/' ~ image.link | trans) }}">
+                                        <button class="btn btn-danger btn-delete-image-trick">-</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+            <div class="form-group">
+                {{ form_label(formTrick.video) }}
+                {{ form_errors(formTrick.video) }}
+                <ul id="youtube-fields-list"
+                    data-prototype="{{ form_widget(formTrick.video.vars.prototype)|e }}"
+                    data-widget-tags="{{ '<li></li>'|e }}"
+                    data-widget-counter="0">
+                </ul>
+                <button type="button" class="add-another-collection-widget btn btn-primary" data-list-selector="#youtube-fields-list">+</button>
+                <button type="button" class="delete-collection-widget btn btn-danger" data-list-selector="#youtube-fields-list">-</button>
+                {{ form_widget(formTrick.video) }}
+
+                <section id="sectionVideo" class="mt-4">
+                    <div class="row d-flex justify-content-around">
+                        {% for video in trick.video %}
+                            <div class="col-xl-4" class="mt-4">
+                                <div class="col-xl-11">
+                                    <div style="position:relative">
+                                        <iframe id="{{ video.id }}" class="w-100" src="http://www.youtube.com/embed/{{ video.link | slice(32) }}" frameborder="0" allowfullscreen></iframe>
+                                        <button class="btn btn-danger btn-delete-video-trick">-</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}  
+                    </div>
+                </section>              
+            </div> 
+            {{ form_end(formTrick)}}
+        </div>
+    </div>
+
+<script>
+    jQuery(document).ready(function () {
+        jQuery('.add-another-collection-widget').click(function (e) {
+            var list = jQuery(jQuery(this).attr('data-list-selector'));
+            var counter = list.data('widget-counter') || list.children().length;
+            var newWidget = list.attr('data-prototype');
+            newWidget = newWidget.replace(/__name__/g, counter);
+            counter++;
+            list.data('widget-counter', counter);
+            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+            newElem.addClass('mt-2 link-field');
+            $(newElem).attr('id', 'link-'+counter);
+            newElem.appendTo(list);
+        });
+        jQuery('.delete-collection-widget').click(function (e) {
+            var list = jQuery(jQuery(this).attr('data-list-selector'));
+            var counter = list.data('widget-counter') || list.children().length;
+            var newWidget = list.attr('data-prototype');
+            if (counter > 0){
+                $("#link-"+counter).remove();
+                counter--;
+                newWidget = newWidget.replace(/__name__/g, counter);
+                list.data('widget-counter', counter);
+            }
+        });
+
+        $('.btn-delete-image-trick').on('click', function(e){
+            e.preventDefault();
+            var name = $(this).parent().children('img').attr('id');
+            $("#sectionImage").append(`<input type="hidden" name="delImageTrick[]" value="`+name+`">`);
+            $(this).parent().remove();
+        })
+
+        $('.btn-delete-video-trick').on('click', function(e){
+            e.preventDefault();
+            var name = $(this).parent().children('iframe').attr('id');
+            $("#sectionVideo").append(`<input type="hidden" name="delVideoTrick[]" value="`+name+`">`);
+            $(this).parent().remove();
+        })
+    });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div>
+    <h1 class="absolute-center">{{ trick.title }}</h1>
+    <img class="w-100" src="{{ asset('uploads/featured_pictures/' ~ trick.featuredPicture | trans) }}" alt="Image à la une du trick">
+</div>
+    <div class="container-fluid">
+        <article class="mb-5">
+            <div class="d-none d-xl-block">
+                <section class="container mb-5">
+                    <div class="row d-flex justify-content-around">
+                        {% for image in trick.image %}
+                            <div class="col-3">
+                                <div class="mt-5 col-11">
+                                    <img class="mt-4 img-fluid" src="{{ asset('uploads/images_trick/' ~ image.link | trans) }}">
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                <section class="container mb-5">
+                    <div class="row d-flex justify-content-around">
+                        {% for video in trick.video %}
+                            <div class="col-3">
+                                <div class="mt-5 col-11">
+                                    <iframe class="w-100" src="http://www.youtube.com/embed/{{ video.link | slice(32) }}" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+            <div class="d-xl-none">
+                <div class="text-center my-4">
+                    <button id="btnShowTrick" class="btn btn-primary">Afficher les médias</button>
+                </div>
+                <div id="mediaMobile">
+                    <section class="container mb-5">
+                        <div class="row d-flex justify-content-around">
+                            {% for image in trick.image %}
+                                <div class="col-10">
+                                    <div class="mt-5 col-11">
+                                        <img class="mt-4 img-fluid" src="{{ asset('uploads/images_trick/' ~ image.link | trans) }}">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                    <section class="container mb-5">
+                        <div class="row d-flex justify-content-around">
+                            {% for video in trick.video %}
+                                <div class="col-10">
+                                    <div class="mt-5 col-11">
+                                        <iframe class="w-100" src="http://www.youtube.com/embed/{{ video.link | slice(32) }}" frameborder="0" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="container">
+                <div class="metadata">Ajouté le {{ trick.createdAt | date('d/m/Y') }} par {{ trick.idUser.pseudo }}</div>
+                <div class="content mt-5">
+                    {{ trick.description | raw }}
+                </div>
+            </div>
+        </article>
+        <section class="container mt-4 mb-4">
+            <h1 class="text-center">Commentaires</h1>
+            <div class="col-xl-6 offset-xl-3">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {{ form_start(formComment) }}
+                <div class="form-group mb-4">
+                    {{ form_row(formComment.comment) }}
+                </div>
+                {{ form_end(formComment)}}
+            {% endif %}
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="text-center mb-4">
+                    <a href="{{ path('app_login') }}">Connectez-vous pour laisser un commentaire</a>
+                </div>
+            {% endif %}
+            </div>
+
+            <div id="comments" class="col-xl-6 offset-xl-3">
+                {% for comment in pagination %}
+                <div class="d-flex position-relative mt-4">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') and comment.User.id == app.user.id %}
+                        <a class="text-danger position-absolute end-0" href="{{ path('comment_delete', {'id': comment.id}) }}" onclick="confirm('Êtes-vous sur de vouloir supprimer ce commentaire ?');"><i class="fa-solid fa-trash-can"></i></a>
+                    {% endif %} 
+                    <p class="mt-3 col-1">
+                        {% if comment.User.avatar|length > 0 %}
+                            <img class="avatar-comment" src="{{ asset('uploads/avatars/' ~ comment.User.avatar | trans) }}" alt="Avatar de {{ comment.User.pseudo }}"> 
+                        {% endif %}
+                    </p>
+                    <div class="col-11 border border-dark">
+                        <p class="mt-1 mx-2">{{ comment.comment }}</p>
+                        <p class="mt-2 mx-2"><small>Ecris par : {{ comment.User.pseudo }} le : {{ comment.createdAt | date('d/m/Y') }}</small></p>                  
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="navigation mt-3">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <script src="{{ asset('js/show-trick.js') }}"></script>
+{% endblock %}
+

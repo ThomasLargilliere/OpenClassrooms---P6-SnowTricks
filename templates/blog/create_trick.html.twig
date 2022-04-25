@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formTrick 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <div class="container mt">
+        <h1 class="text-center">Ajouter un trick</h1>
+
+        <div class="col-xl-6 offset-xl-3 mt-4">
+            {{ form_start(formTrick) }}
+            <div class="form-group mb-3">
+                {{ form_row(formTrick.title) }}
+            </div>
+            <div class="form-group mb-3">
+                {{ form_row(formTrick.description) }}
+            </div>
+            <div class="form-group mb-3">
+                {{ form_row(formTrick.id_category) }}
+            </div>
+            <div class="form-group mb-3">
+                {{ form_row(formTrick.featuredPicture) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(formTrick.image) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formTrick.video) }}
+                {{ form_errors(formTrick.video) }}
+                <ul id="youtube-fields-list"
+                    data-prototype="{{ form_widget(formTrick.video.vars.prototype)|e }}"
+                    data-widget-tags="{{ '<li></li>'|e }}"
+                    data-widget-counter="{{ formTrick.video|length }}">
+                    {% for linkField in formTrick.video %}
+                        <li>
+                            {{ form_widget(linkField) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="button" class="add-another-collection-widget btn btn-primary" data-list-selector="#youtube-fields-list">+</button>
+                <button type="button" class="delete-collection-widget btn btn-danger" data-list-selector="#youtube-fields-list">-</button>
+            </div> 
+            {{ form_end(formTrick)}}
+        </div>
+    </div>
+
+<script>
+    jQuery(document).ready(function () {
+        jQuery('.add-another-collection-widget').click(function (e) {
+            var list = jQuery(jQuery(this).attr('data-list-selector'));
+            var counter = list.data('widget-counter') || list.children().length;
+            var newWidget = list.attr('data-prototype');
+            newWidget = newWidget.replace(/__name__/g, counter);
+            counter++;
+            list.data('widget-counter', counter);
+            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+            newElem.addClass('mt-2 link-field');
+            $(newElem).attr('id', 'link-'+counter);
+            newElem.appendTo(list);
+        });
+        jQuery('.delete-collection-widget').click(function (e) {
+            var list = jQuery(jQuery(this).attr('data-list-selector'));
+            var counter = list.data('widget-counter') || list.children().length;
+            var newWidget = list.attr('data-prototype');
+            if (counter > 0){
+                $("#link-"+counter).remove();
+                counter--;
+                newWidget = newWidget.replace(/__name__/g, counter);
+                list.data('widget-counter', counter);
+            }
+        });
+    });
+
+</script>
+
+{% endblock %}
