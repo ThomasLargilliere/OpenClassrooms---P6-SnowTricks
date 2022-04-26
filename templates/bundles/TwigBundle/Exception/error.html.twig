@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt">
+        <h1>Page introuvable !</h1>
+
+        <p>
+            Nous n'avons pas pu accéder à votre requête, vous devez êtes perdu, retourner donc à l'accueil
+            <a href="{{ path('index') }}">Retour à l'accueil</a>.
+        </p>
+    </div>
+{% endblock %}
