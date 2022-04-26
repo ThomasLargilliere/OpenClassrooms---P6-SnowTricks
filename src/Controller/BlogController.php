@@ -174,12 +174,13 @@ class BlogController extends AbstractController
             $entityManager->merge($comment);
             $entityManager->flush();
             $this->addFlash('success', 'Le commentaire a bien été ajouté !');
-            return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug()]);
+            return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug(), '_fragment' => 'comments']);
         }
 
         $query = $repoComment
             ->createQueryBuilder('c')
             ->where('c.Trick = :trick_id')
+            ->orderBy('c.id', 'DESC')
             ->setParameter('trick_id', $trick->getId())
         ;
 
@@ -451,7 +452,7 @@ class BlogController extends AbstractController
 
         if ($comment->getUser()->getId() != $user->getId()){
             $this->addFlash('failed', 'Vous n\'êtes pas l\'auteur de ce commentaire');
-            return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug()]);
+            return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug(), '_fragment' => 'comments']);
         }
 
         $entityManager = $doctrine->getManager();
@@ -459,6 +460,6 @@ class BlogController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('success', 'Commentaire supprimé avec succès');
-        return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug()]);
+        return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug(), '_fragment' => 'comments']);
     }
 }
