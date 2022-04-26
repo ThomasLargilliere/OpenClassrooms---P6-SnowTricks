@@ -1,6 +1,6 @@
 # snowtricks
 
-InsightSymfony : https://insight.symfony.com/projects/95e180b7-5753-4026-8a75-28a959bd1c33/analyses/18
+InsightSymfony : https://insight.symfony.com/projects/95e180b7-5753-4026-8a75-28a959bd1c33/analyses/21
 
 ## Installation
 1. Clonez ou téléchargez le repository GitHub dans le dossier voulu :
