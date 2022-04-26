@@ -26,3 +26,14 @@ InsightSymfony : https://insight.symfony.com/projects/95e180b7-5753-4026-8a75-28
     symfony server:start
     N'oublier pas de lancer aussi votre base de donnée via XAMPP, MAMP ou WAMP
 ```
+OPTIONNEL :
+
+1. Utiliser un jeu de données crées :
+```
+    php bin/console doctrine:fixtures:load
+```
+2. Se connecter :
+```
+    Email : test@test.fr
+    Mot de passe : test
+```
