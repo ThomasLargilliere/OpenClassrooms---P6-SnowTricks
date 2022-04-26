@@ -21,11 +21,11 @@ InsightSymfony : https://insight.symfony.com/projects/95e180b7-5753-4026-8a75-28
 ```
     php bin/console doctrine:migrations:migrate
 ```
-6. Pour lancer le serveur utiliser la commande suivante :
+6. Pour lancer le serveur utiliser la commande suivante (N'oublier pas de lancer aussi votre base de donnée via XAMPP, MAMP ou WAMP) :
 ```
     symfony server:start
 ```
-N'oublier pas de lancer aussi votre base de donnée via XAMPP, MAMP ou WAMP
+
 OPTIONNEL :
 
 1. Utiliser un jeu de données crées :
