@@ -29,7 +29,7 @@
                     <ul class="navbar-nav me-auto">
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('create_trick') }}">Ajouter un trick</a>
+                            <a class="nav-link" href="{{ path('createTrick') }}">Ajouter un trick</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -88,7 +88,7 @@
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('create_trick') }}">Ajouter un trick</a>
+                        <a class="nav-link" href="{{ path('createTrick') }}">Ajouter un trick</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>

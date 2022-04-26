@@ -68,8 +68,8 @@ class BlogController extends AbstractController
             'pagination' => $pagination
         ]);
     }
-    #[Route('/create/trick', name: 'create_trick')]
-    public function create_trick(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger){
+    #[Route('/create/trick', name: 'createTrick')]
+    public function createTrick(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger){
 
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -91,7 +91,7 @@ class BlogController extends AbstractController
                     );
                 } catch (FileException $e) {
                     $this->addFlash('failed', 'Erreur lors de l\'upload de l\'image à la une');
-                    return $this->redirectToRoute('create_trick');
+                    return $this->redirectToRoute('createTrick');
                 }
 
                 $trick->setFeaturedPicture($newFilename);
@@ -142,7 +142,7 @@ class BlogController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre trick a bien été ajouté !');
-            return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
+            return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug()]);
         }
 
         return $this->render('blog/create_trick.html.twig', [
@@ -150,8 +150,8 @@ class BlogController extends AbstractController
         ]);
     }
 
-    #[Route('/trick/{slug}', name: 'trick_show')]
-    public function show(Request $request, ManagerRegistry $doctrine, $slug, \App\Repository\TrickRepository $repo, \App\Repository\CommentRepository $repoComment, PaginatorInterface $paginator){
+    #[Route('/trick/{slug}', name: 'trickShow')]
+    public function trickShow(Request $request, ManagerRegistry $doctrine, $slug, \App\Repository\TrickRepository $repo, \App\Repository\CommentRepository $repoComment, PaginatorInterface $paginator){
         $trick = $repo->findOneBySlug($slug);
         if (!$trick){
             $this->addFlash('failed', 'Aucun trick trouvé');
@@ -174,7 +174,7 @@ class BlogController extends AbstractController
             $entityManager->merge($comment);
             $entityManager->flush();
             $this->addFlash('success', 'Le commentaire a bien été ajouté !');
-            return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
+            return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug()]);
         }
 
         $query = $repoComment
@@ -273,8 +273,8 @@ class BlogController extends AbstractController
         ]);
     }
 
-    #[Route('/update/trick/{slug}', name: 'trick_update')]
-    public function update_trick(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, $slug, \App\Repository\TrickRepository $repo, \App\Repository\ImageTrickRepository $repoImage, \App\Repository\VideoTrickRepository $repoVideo){
+    #[Route('/update/trick/{slug}', name: 'trickUpdate')]
+    public function trickUpdate(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, $slug, \App\Repository\TrickRepository $repo, \App\Repository\ImageTrickRepository $repoImage, \App\Repository\VideoTrickRepository $repoVideo){
         
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
@@ -309,7 +309,7 @@ class BlogController extends AbstractController
                     );
                 } catch (FileException $e) {
                     $this->addFlash('failed', 'Erreur lors de l\'upload de l\'image à la une');
-                    return $this->redirectToRoute('create_trick');
+                    return $this->redirectToRoute('createTrick');
                 }
 
                 $trick->setFeaturedPicture($newFilename);
@@ -387,7 +387,7 @@ class BlogController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre trick a été modifié avec succèss !');
-            return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
+            return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug()]);
         }
 
         return $this->render('blog/update_trick.html.twig', [
@@ -396,8 +396,8 @@ class BlogController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/trick/{id}', name: 'trick_delete')]
-    public function delete_trick(Request $request, ManagerRegistry $doctrine, \App\Repository\TrickRepository $repo, \App\Repository\ImageTrickRepository $repoImage, \App\Repository\VideoTrickRepository $repoVideo, \App\Repository\CommentRepository $repoComment, $id){
+    #[Route('/delete/trick/{id}', name: 'trickDelete')]
+    public function trickDelete(Request $request, ManagerRegistry $doctrine, \App\Repository\TrickRepository $repo, \App\Repository\ImageTrickRepository $repoImage, \App\Repository\VideoTrickRepository $repoVideo, \App\Repository\CommentRepository $repoComment, $id){
         
         $this->denyAccessUnlessGranted('ROLE_USER');
         $user = $this->getUser();
@@ -440,8 +440,8 @@ class BlogController extends AbstractController
         $this->addFlash('success', 'Trick supprimé avec succès');
         return $this->redirectToRoute('index');
     }
-    #[Route('/delete/comment/{id}', name: 'comment_delete')]
-    public function delete_comment(Request $request, ManagerRegistry $doctrine, \App\Repository\CommentRepository $repo, \App\Repository\TrickRepository $repoTrick, $id){
+    #[Route('/delete/comment/{id}', name: 'commentDelete')]
+    public function commentDelete(Request $request, ManagerRegistry $doctrine, \App\Repository\CommentRepository $repo, \App\Repository\TrickRepository $repoTrick, $id){
         
         $this->denyAccessUnlessGranted('ROLE_USER');
         
@@ -451,7 +451,7 @@ class BlogController extends AbstractController
 
         if ($comment->getUser()->getId() != $user->getId()){
             $this->addFlash('failed', 'Vous n\'êtes pas l\'auteur de ce commentaire');
-            return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
+            return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug()]);
         }
 
         $entityManager = $doctrine->getManager();
@@ -459,6 +459,6 @@ class BlogController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('success', 'Commentaire supprimé avec succès');
-        return $this->redirectToRoute('trick_show', ['slug' => $trick->getSlug()]);
+        return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug()]);
     }
 }

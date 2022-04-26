@@ -9,7 +9,7 @@
 
     {% if pagination.items|length == 0 %}
         <div class="text-center">
-            Aucun trick n'a encore été crée, soyer le premier ! <a href="{{ path('create_trick') }}">Créer un trick</a>
+            Aucun trick n'a encore été crée, soyer le premier ! <a href="{{ path('createTrick') }}">Créer un trick</a>
         </div>
     {% else %}
 
@@ -21,17 +21,17 @@
                             <div class="position-relative item-trick-hover">
                                 {% if is_granted('IS_AUTHENTICATED_FULLY') and trick.idUser.id == app.user.id %}
                                 <div class="position-absolute end-0 d-flex justify-content-around w-25">
-                                    <a class="text-warning" href="{{ path('trick_update', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil fa-hover"></i></a>
-                                    <a class="text-danger" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="confirm('Êtes-vous sur de vouloir supprimer ce trick ?');"><i class="fa-solid fa-trash-can fa-hover"></i></a>
+                                    <a class="text-warning" href="{{ path('trickUpdate', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil fa-hover"></i></a>
+                                    <a class="text-danger" href="{{ path('trickDelete', {'id': trick.id}) }}" onclick="confirm('Êtes-vous sur de vouloir supprimer ce trick ?');"><i class="fa-solid fa-trash-can fa-hover"></i></a>
                                 </div>
                                 {% endif %}
-                                <a href="{{ path('trick_show', {'slug': trick.slug}) }}">
+                                <a href="{{ path('trickShow', {'slug': trick.slug}) }}">
                                     <img class="item-trick-image rounded" src="{{ asset('uploads/featured_pictures/' ~ trick.featuredPicture | trans) }}" alt="Photo du trick">
                                 </a>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title text-center">
-                                    <a href="{{ path('trick_show', {'slug': trick.slug}) }}">{{ trick.title|length > 25 ? trick.title|slice(0, 15) ~ '...' : trick.title  }}</a>
+                                    <a href="{{ path('trickShow', {'slug': trick.slug}) }}">{{ trick.title|length > 25 ? trick.title|slice(0, 15) ~ '...' : trick.title  }}</a>
                                 </h5>
                             </div>
                         </div>
