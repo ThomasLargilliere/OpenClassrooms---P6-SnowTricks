@@ -136,4 +136,7 @@
         width:100%;
         height:auto;
     }
+    .update-delete-phone{
+        width: 25%;
+    }
 }

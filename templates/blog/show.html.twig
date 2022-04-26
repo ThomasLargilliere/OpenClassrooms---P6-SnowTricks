@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div>
-    <div class="position-absolute end-0 mt d-flex justify-content-around div-icon">
-        <a class="text-warning" href="{{ path('trickUpdate', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil ft-icon fa-hover"></i></a>
-        <a class="text-danger" href="{{ path('trickDelete', {'id': trick.id}) }}" onclick="confirm('Êtes-vous sur de vouloir supprimer ce trick ?');"><i class="fa-solid fa-trash-can ft-icon fa-hover"></i></a>
+    <div class="vh-100">
+        <div class="position-absolute end-2 mt d-flex justify-content-around div-icon update-delete-phone">
+            <a class="text-warning" href="{{ path('trickUpdate', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil ft-icon fa-hover"></i></a>
+            <a class="text-danger" href="{{ path('trickDelete', {'id': trick.id}) }}" onclick="confirm('Êtes-vous sur de vouloir supprimer ce trick ?');"><i class="fa-solid fa-trash-can ft-icon fa-hover"></i></a>
+        </div>
+        <h1 class="absolute-center">{{ trick.title }}</h1>
+        <img class="w-100 vh-100" src="{{ asset('uploads/featured_pictures/' ~ trick.featuredPicture | trans) }}" alt="Image à la une du trick">
     </div>
-    <h1 class="absolute-center">{{ trick.title }}</h1>
-    <img class="w-100" src="{{ asset('uploads/featured_pictures/' ~ trick.featuredPicture | trans) }}" alt="Image à la une du trick">
-</div>
     <div class="container-fluid">
         <article class="mb-5">
             <div class="d-none d-xl-block">
