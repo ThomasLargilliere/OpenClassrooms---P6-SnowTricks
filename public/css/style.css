@@ -83,6 +83,14 @@
     transform:scale(1.15);
 }
 
+.div-icon{
+    width: 10%;
+}
+
+.ft-icon{
+    font-size: 30px;
+}
+
 @media (min-width: 992px) and (max-width: 1500px){
     .item-trick{
         flex-basis:25%;

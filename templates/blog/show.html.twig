@@ -2,6 +2,10 @@
 
 {% block body %}
 <div>
+    <div class="position-absolute end-0 mt d-flex justify-content-around div-icon">
+        <a class="text-warning" href="{{ path('trick_update', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil ft-icon"></i></a>
+        <a class="text-danger" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="confirm('Êtes-vous sur de vouloir supprimer ce trick ?');"><i class="fa-solid fa-trash-can ft-icon"></i></a>
+    </div>
     <h1 class="absolute-center">{{ trick.title }}</h1>
     <img class="w-100" src="{{ asset('uploads/featured_pictures/' ~ trick.featuredPicture | trans) }}" alt="Image à la une du trick">
 </div>
