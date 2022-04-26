@@ -4,7 +4,9 @@
     <section id="sectionTop" class="vh-100">
         <img class="w-100 vh-100 d-none d-xl-block" src="images/trick_snowboard.jpg">
         <img class="w-100 vh-100 d-xl-none" src="images/snowboard_trick_tel.webp">
-        <a id="btnGoSectionTrick" href="#sectionTrick"><i class="fa-solid fa-circle-arrow-down"></i></a>
+        {% if pagination.items|length > 0 %}
+            <a id="btnGoSectionTrick" href="#sectionTrick"><i class="fa-solid fa-circle-arrow-down"></i></a>
+        {% endif %}
     </section>
 
     {% if pagination.items|length == 0 %}
