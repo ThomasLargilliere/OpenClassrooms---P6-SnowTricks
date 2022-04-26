@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\Trick;
 use App\Entity\Comment;
+use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -15,12 +16,12 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $entityManager)
     {
         $user = new User();
-        $user->setEmail('admin@admin.fr');
-        $user->setPseudo('admin');
-        $user->setFirstName('Admin');
-        $user->setLastName('Admin');
+        $user->setEmail('test@test.fr');
+        $user->setPseudo('Test (Pseudo)');
+        $user->setFirstName('Test (Prénom)');
+        $user->setLastName('Test (Nom)');
         $user->setIsVerified(1);
-        $passwordHash = password_hash('admin', PASSWORD_DEFAULT);
+        $passwordHash = password_hash('test', PASSWORD_DEFAULT);
         $user->setPassword($passwordHash);
 
         $entityManager->persist($user);
@@ -138,14 +139,14 @@ class AppFixtures extends Fixture
         $trick->setIdCategory($category1);
         $trick->setIdUser($user);
         $trick->setTitle('Rotation');
-        $trick->setDescription(`On désigne par le mot « rotation » uniquement des rotations horizontales ; les rotations verticales sont des flips. Le principe est d'effectuer une rotation horizontale pendant le saut, puis d'attérir en position switch ou normal. La nomenclature se base sur le nombre de degrés de rotation effectués  :
+        $trick->setDescription("On désigne par le mot « rotation » uniquement des rotations horizontales ; les rotations verticales sont des flips. Le principe est d'effectuer une rotation horizontale pendant le saut, puis d'attérir en position switch ou normal. La nomenclature se base sur le nombre de degrés de rotation effectués  :
             un 180 désigne un demi-tour, soit 180 degrés d'angle ;
             360, trois six pour un tour complet ;
             540, cinq quatre pour un tour et demi ;
             720, sept deux pour deux tours complets ;
             900 pour deux tours et demi ;
             1080 ou big foot pour trois tours ;
-            etc.`);
+            etc.");
         $trick->setSlug('rotation');
         $trick->setCreatedAt(new \DateTimeImmutable());
         $trick->setFeaturedPicture('rota-6266edf48121a.jpg');
@@ -158,7 +159,7 @@ class AppFixtures extends Fixture
             $comment->setComment('Commentaire n° : ' . $i);
             $comment->setCreatedAt(new \DateTimeImmutable());
             $comment->setTrick($trick);
-            $manager->persist($comment);
+            $entityManager->persist($comment);
         }
 
         $entityManager->flush();
