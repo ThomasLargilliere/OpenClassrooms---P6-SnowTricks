@@ -320,30 +320,30 @@ class BlogController extends AbstractController
             }
 
             $entityManager = $doctrine->getManager();
-            $delImage = [];
-            if (isset($_POST['delImageTrick'])){ $delImage = $_POST['delImageTrick']; }
-
-            foreach($delImage as $image){
-                $bdImage = $repoImage->findOneByLink($image);
-                $fichier = $this->getParameter('images_trick_directory') . '/' . $image;
-                if(file_exists($fichier)){
-                    $entityManager->remove($bdImage);
-                    unlink($fichier);
+            $value = $request->request->all();
+            
+            if (isset($value['delImageTrick'])){
+                $delImage = $value['delImageTrick'];
+                foreach($delImage as $image){
+                    $bdImage = $repoImage->findOneByLink($image);
+                    $fichier = $this->getParameter('images_trick_directory') . '/' . $image;
+                    if(file_exists($fichier)){
+                        $entityManager->remove($bdImage);
+                        unlink($fichier);
+                    }
                 }
+                $entityManager->flush();
             }
 
-            $entityManager->flush();
+            if (isset($value['delVideoTrick'])){
+                $delVideo = $value['delVideoTrick'];
+                foreach($delVideo as $video){
+                    $bdVideo = $repoVideo->findOneById($video);
+                    $entityManager->remove($bdVideo);
+                }
 
-            $delVideo = [];
-            if (isset($_POST['delVideoTrick'])){ $delVideo = $_POST['delVideoTrick']; }
-
-            foreach($delVideo as $video){
-                $bdVideo = $repoVideo->findOneById($video);
-                $entityManager->remove($bdVideo);
+                $entityManager->flush();
             }
-
-            $entityManager->flush();
-
 
             $slug = $slugger->slug(strtolower($trick->getTitle()));
             $trick->setSlug($slug);
