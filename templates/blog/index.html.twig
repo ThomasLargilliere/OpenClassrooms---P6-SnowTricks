@@ -18,11 +18,11 @@
                 {% for trick in pagination %}
                     <div class="item-trick">
                         <div class="card mt-5 col-xl-11">
-                            <div class="position-relative">
+                            <div class="position-relative item-trick-hover">
                                 {% if is_granted('IS_AUTHENTICATED_FULLY') and trick.idUser.id == app.user.id %}
-                                <div style="width:15%;" class="position-absolute end-0 d-flex justify-content-around">
-                                    <a class="text-warning" href="{{ path('trick_update', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil"></i></a>
-                                    <a class="text-danger" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="confirm('Êtes-vous sur de vouloir supprimer ce trick ?');"><i class="fa-solid fa-trash-can"></i></a>
+                                <div class="position-absolute end-0 d-flex justify-content-around w-25">
+                                    <a class="text-warning" href="{{ path('trick_update', {'slug': trick.slug}) }}"><i class="fa-solid fa-pencil fa-hover"></i></a>
+                                    <a class="text-danger" href="{{ path('trick_delete', {'id': trick.id}) }}" onclick="confirm('Êtes-vous sur de vouloir supprimer ce trick ?');"><i class="fa-solid fa-trash-can fa-hover"></i></a>
                                 </div>
                                 {% endif %}
                                 <a href="{{ path('trick_show', {'slug': trick.slug}) }}">

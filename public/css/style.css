@@ -71,16 +71,31 @@
 .item-trick-image{
     width:100%;
     height:200px;
+}
+
+.item-trick-hover{
     transition: 0.5s;
 }
 
-.item-trick-image:hover{
-/* L'image est grossie de 15% */
-    -webkit-transform:scale(1.15);
-    -moz-transform:scale(1.15);
-    -ms-transform:scale(1.15);
-    -o-transform:scale(1.15);
-    transform:scale(1.15);
+.item-trick-hover:hover{
+/* L'image est grossie de 5% */
+    -webkit-transform:scale(1.05);
+    -moz-transform:scale(1.05);
+    -ms-transform:scale(1.05);
+    -o-transform:scale(1.05);
+    transform:scale(1.05);
+}
+
+.fa-hover{
+    transition: 0.5s;
+}
+
+.fa-hover:hover{
+    -webkit-transform:scale(1.25);
+    -moz-transform:scale(1.25);
+    -ms-transform:scale(1.25);
+    -o-transform:scale(1.25);
+    transform:scale(1.25);   
 }
 
 .div-icon{
@@ -89,6 +104,10 @@
 
 .ft-icon{
     font-size: 30px;
+}
+
+.end-2{
+    right: 2%;
 }
 
 @media (min-width: 992px) and (max-width: 1500px){
