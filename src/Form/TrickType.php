@@ -13,6 +13,7 @@ class TrickType extends AbstractType
     {
         $builder
             ->add('title', null, [
+                'required' => true,
                 'label' => 'Titre du trick',
                 'attr' => [
                     'placeholder' => '',
@@ -20,6 +21,7 @@ class TrickType extends AbstractType
                 ]
             ])
             ->add('description', null, [
+                'required' => true,
                 'label' => 'Description du trick',
                 'attr' => [
                     'placeholder' => '',

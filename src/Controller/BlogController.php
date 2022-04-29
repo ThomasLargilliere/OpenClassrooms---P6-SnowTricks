@@ -142,7 +142,7 @@ class BlogController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre trick a bien été ajouté !');
-            return $this->redirectToRoute('trickShow', ['slug' => $trick->getSlug()]);
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('blog/create_trick.html.twig', [
@@ -187,7 +187,7 @@ class BlogController extends AbstractController
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            5
+            10
         );
         $pagination->setCustomParameters([
             'align' => 'center',
